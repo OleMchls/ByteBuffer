@@ -11,7 +11,7 @@ Installation should be done via [composer](http://packagist.org/).
 ```
 {
     "require": {
-        "nesQuick/TrafficCophp/ByteBuffer": "dev-master"
+        "TrafficCophp/ByteBuffer": "dev-master"
     }
 }
 ```
