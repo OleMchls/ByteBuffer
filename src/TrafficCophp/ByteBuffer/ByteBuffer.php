@@ -51,7 +51,7 @@ class ByteBuffer {
 
 	public function __toString() {
 		$buf = '';
-		for ($i = 0; $i < count($this->structs); $i++) {
+		for ($i = 0; $i < $this->structs->getSize(); $i++) {
 			if ($this->structs[$i] instanceof Struct) {
 				$struct = $this->structs[$i];
 				$buf .= pack($struct->getFormat(), $struct->getValue());
@@ -65,7 +65,7 @@ class ByteBuffer {
 	}
 
 	public function length() {
-		return count($this->structs);
+		return $this->structs->getSize();
 	}
 
 	public function write($string, $offset) {
