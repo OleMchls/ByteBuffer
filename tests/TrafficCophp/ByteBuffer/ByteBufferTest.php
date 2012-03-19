@@ -47,9 +47,9 @@ class BufferTest extends PHPUnit_Framework_TestCase {
 		$buffer->writeInt32BE(0xfeedfacefeed, 0);
 	}
 
-	public function testLenght() {
+	public function testLength() {
 		$buffer = new ByteBuffer(8);
-		$this->assertEquals(8, $buffer->lenght());
+		$this->assertEquals(8, $buffer->length());
 	}
 
 	public function testWriteInt8() {

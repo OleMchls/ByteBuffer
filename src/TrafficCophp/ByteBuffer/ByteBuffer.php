@@ -3,7 +3,7 @@
 namespace TrafficCophp\ByteBuffer;
 
 use TrafficCophp\ByteBuffer\Struct;
-use TrafficCophp\ByteBuffer\LenghtMap;
+use TrafficCophp\ByteBuffer\LengthMap;
 
 /**
  * ByteBuffer
@@ -20,25 +20,25 @@ class ByteBuffer {
 	protected $structs;
 
 	/**
-	 * @var LenghtMap
+	 * @var LengthMap
 	 */
-	protected $lenghtMap;
+	protected $lengthMap;
 
-	public function __construct($lenght) {
-		$this->lenghtMap = new LenghtMap();
-		$this->structs = new \SplFixedArray($lenght);
-		$this->initializeStructs($lenght);
+	public function __construct($length) {
+		$this->lengthMap = new LengthMap();
+		$this->structs = new \SplFixedArray($length);
+		$this->initializeStructs($length);
 	}
 
-	protected function initializeStructs($lenght) {
-		for ($i = 0; $i < $lenght; $i++) {
+	protected function initializeStructs($length) {
+		for ($i = 0; $i < $length; $i++) {
 			$this->structs[$i] = self::BLANK;
 		}
 	}
 
-	protected function insert($format, $value, $offset, $lenght) {
-		$this->structs[$offset] = new Struct($format, $value, $lenght);
-		for ($i = 1; $i < $lenght; $i++) {
+	protected function insert($format, $value, $offset, $length) {
+		$this->structs[$offset] = new Struct($format, $value, $length);
+		for ($i = 1; $i < $length; $i++) {
 			$this->structs[$offset + $i] = self::RESERVED;
 		}
 	}
@@ -64,7 +64,7 @@ class ByteBuffer {
 		return $buf;
 	}
 
-	public function lenght() {
+	public function length() {
 		return count($this->structs);
 	}
 
@@ -76,31 +76,31 @@ class ByteBuffer {
 	public function writeInt8($value, $offset) {
 		$format = 'c';
 		$this->checkForOverSize(0xff, $value);
-		$this->insert($format, $value, $offset, $this->lenghtMap->getLenghtFor($format));
+		$this->insert($format, $value, $offset, $this->lengthMap->getLengthFor($format));
 	}
 
 	public function writeInt16BE($value, $offset) {
 		$format = 'n';
 		$this->checkForOverSize(0xffff, $value);
-		$this->insert($format, $value, $offset, $this->lenghtMap->getLenghtFor($format));
+		$this->insert($format, $value, $offset, $this->lengthMap->getLengthFor($format));
 	}
 
 	public function writeInt16LE($value, $offset) {
 		$format = 'v';
 		$this->checkForOverSize(0xffff, $value);
-		$this->insert($format, $value, $offset, $this->lenghtMap->getLenghtFor($format));
+		$this->insert($format, $value, $offset, $this->lengthMap->getLengthFor($format));
 	}
 
 	public function writeInt32BE($value, $offset) {
 		$format = 'N';
 		$this->checkForOverSize(0xffffffff, $value);
-		$this->insert($format, $value, $offset, $this->lenghtMap->getLenghtFor($format));
+		$this->insert($format, $value, $offset, $this->lengthMap->getLengthFor($format));
 	}
 
 	public function writeInt32LE($value, $offset) {
 		$format = 'V';
 		$this->checkForOverSize(0xffffffff, $value);
-		$this->insert($format, $value, $offset, $this->lenghtMap->getLenghtFor($format));
+		$this->insert($format, $value, $offset, $this->lengthMap->getLengthFor($format));
 	}
 
 }

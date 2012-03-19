@@ -3,9 +3,9 @@
 namespace TrafficCophp\ByteBuffer;
 
 /**
- * LenghtMap
+ * LengthMap
  */
-class LenghtMap {
+class LengthMap {
 
 	protected $map;
 
@@ -20,7 +20,7 @@ class LenghtMap {
 		);
 	}
 
-	public function getLenghtFor($format) {
+	public function getLengthFor($format) {
 		return $this->map[$format];
 	}
 

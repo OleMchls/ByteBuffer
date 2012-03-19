@@ -9,12 +9,12 @@ class Struct {
 
 	protected $format;
 	protected $value;
-	protected $lenght;
+	protected $length;
 
-	function __construct($format, $value, $lenght) {
+	function __construct($format, $value, $length) {
 		$this->format = $format;
 		$this->value = $value;
-		$this->lenght = $lenght;
+		$this->length = $length;
 	}
 
 	public function getFormat() {
@@ -25,8 +25,8 @@ class Struct {
 		return $this->value;
 	}
 
-	public function getLenght() {
-		return $this->lenght;
+	public function getLength() {
+		return $this->length;
 	}
 
 }
