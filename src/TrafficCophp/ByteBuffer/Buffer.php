@@ -2,13 +2,10 @@
 
 namespace TrafficCophp\ByteBuffer;
 
-use TrafficCophp\ByteBuffer\Struct;
-use TrafficCophp\ByteBuffer\LengthMap;
-
 /**
  * ByteBuffer
  */
-class ByteBuffer {
+class Buffer {
 
 	const DEFAULT_FORMAT = 'x';
 	const RESERVED = '__RESERVED__';
