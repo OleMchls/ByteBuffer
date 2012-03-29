@@ -21,15 +21,19 @@ class Buffer {
 	 */
 	protected $lengthMap;
 
-	public function __construct($length) {
+	public function __construct($argument) {
 		$this->lengthMap = new LengthMap();
-		$this->structs = new \SplFixedArray($length);
-		$this->initializeStructs($length);
+		if (is_string($argument)) {
+			$this->initializeStructs(strlen($argument), $argument);
+		} else {
+			$this->initializeStructs($argument, array_fill(0, $argument, self::BLANK));
+		}
 	}
 
-	protected function initializeStructs($length) {
+	protected function initializeStructs($length, $content) {
+		$this->structs = new \SplFixedArray($length);
 		for ($i = 0; $i < $length; $i++) {
-			$this->structs[$i] = self::BLANK;
+			$this->structs[$i] = $content[$i];
 		}
 	}
 
