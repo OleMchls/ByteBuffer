@@ -55,31 +55,61 @@ class BufferTest extends PHPUnit_Framework_TestCase {
 	public function testWriteInt8() {
 		$buffer = new Buffer(1);
 		$buffer->writeInt8(0xfe, 0);
-		$this->assertSame(pack('c', 0xfe), (string) $buffer);
+		$this->assertSame(pack('C', 0xfe), (string) $buffer);
 	}
 
-	public function testWriteUInt16BE() {
+	public function testWriteInt16BE() {
 		$buffer = new Buffer(2);
 		$buffer->writeInt16BE(0xbabe, 0);
 		$this->assertSame(pack('n', 0xbabe), (string) $buffer);
 	}
 
-	public function testWriteUInt16LE() {
+	public function testWriteInt16LE() {
 		$buffer = new Buffer(2);
 		$buffer->writeInt16LE(0xabeb, 0);
 		$this->assertSame(pack('v', 0xabeb), (string) $buffer);
 	}
 
-	public function testWriteUInt32BE() {
+	public function testWriteInt32BE() {
 		$buffer = new Buffer(4);
 		$buffer->writeInt32BE(0xfeedface, 0);
 		$this->assertSame(pack('N', 0xfeedface), (string) $buffer);
 	}
 
-	public function testWriteUInt32LE() {
+	public function testWriteInt32LE() {
 		$buffer = new Buffer(4);
 		$buffer->writeInt32LE(0xfeedface, 0);
 		$this->assertSame(pack('V', 0xfeedface), (string) $buffer);
+	}
+
+	public function testReaderBufferInitializeLenght() {
+		$buffer = new Buffer(pack('V', 0xfeedface));
+		$this->assertEquals(4, $buffer->length());
+	}
+
+	public function testReadInt8() {
+		$buffer = new Buffer(pack('C', 0xfe));
+		$this->assertSame(0xfe, $buffer->readInt8(0));
+	}
+
+	public function testReadInt16BE() {
+		$buffer = new Buffer(pack('n', 0xbabe));
+		$this->assertSame(0xbabe, $buffer->readInt16BE(0));
+	}
+
+	public function testReadInt16LE() {
+		$buffer = new Buffer(pack('v', 0xabeb));
+		$this->assertSame(0xabeb, $buffer->readInt16LE(0));
+	}
+
+	public function testReadInt32BE() {
+		$buffer = new Buffer(pack('N', 0xfeedface));
+		$this->assertSame(0xfeedface, $buffer->readInt32BE(0));
+	}
+
+	public function testReadInt32LE() {
+		$buffer = new Buffer(pack('V', 0xfeedface));
+		$this->assertSame(0xfeedface, $buffer->readInt32LE(0));
 	}
 
 }

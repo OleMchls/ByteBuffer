@@ -5,7 +5,7 @@ namespace TrafficCophp\ByteBuffer;
 /**
  * ByteBuffer
  */
-class Buffer {
+class Buffer extends AbstractBuffer {
 
 	const DEFAULT_FORMAT = 'x';
 	const RESERVED = '__RESERVED__';
@@ -44,6 +44,15 @@ class Buffer {
 		}
 	}
 
+	protected function extract($format, $offset) {
+		$length = $this->lengthMap->getLengthFor($format);
+		$encoded = '';
+		for ($i = 0; $i < $length; $i++) {
+			$encoded .= $this->structs->offsetGet($offset + $i);
+		}
+		return array_pop(unpack($format, $encoded));
+	}
+
 	protected function checkForOverSize($excpected_max, $actual) {
 		if ($actual > $excpected_max) {
 			throw new \InvalidArgumentException(sprintf('%d exceeded limit of %d', $actual, $excpected_max));
@@ -75,7 +84,7 @@ class Buffer {
 	}
 
 	public function writeInt8($value, $offset) {
-		$format = 'c';
+		$format = 'C';
 		$this->checkForOverSize(0xff, $value);
 		$this->insert($format, $value, $offset, $this->lengthMap->getLengthFor($format));
 	}
@@ -102,6 +111,33 @@ class Buffer {
 		$format = 'V';
 		$this->checkForOverSize(0xffffffff, $value);
 		$this->insert($format, $value, $offset, $this->lengthMap->getLengthFor($format));
+	}
+
+	public function read($start, $end) {}
+
+	public function readInt8($offset) {
+		$format = 'C';
+		return $this->extract($format, $offset);;
+	}
+
+	public function readInt16BE($offset) {
+		$format = 'n';
+		return $this->extract($format, $offset);
+	}
+
+	public function readInt16LE($offset) {
+		$format = 'v';
+		return $this->extract($format, $offset);
+	}
+
+	public function readInt32BE($offset) {
+		$format = 'N';
+		return $this->extract($format, $offset);
+	}
+
+	public function readInt32LE($offset) {
+		$format = 'V';
+		return $this->extract($format, $offset);
 	}
 
 }

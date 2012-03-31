@@ -9,13 +9,13 @@
 
 	<testsuites>
 		<testsuite name="TrafficCophp Bytebuffer Test Suite">
-			<directory suffix="Test.php">./tests/TrafficCophp/ByteBuffer</directory>
+			<directory suffix="Test.php">tests/TrafficCophp/ByteBuffer</directory>
 		</testsuite>
 	</testsuites>
 
 	<filter>
 		<whitelist>
-			<directory suffix=".php">./src</directory>
+			<directory suffix=".php">src</directory>
 		</whitelist>
 	</filter>
 
