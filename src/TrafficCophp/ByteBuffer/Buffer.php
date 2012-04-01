@@ -50,7 +50,8 @@ class Buffer extends AbstractBuffer {
 		for ($i = 0; $i < $length; $i++) {
 			$encoded .= $this->structs->offsetGet($offset + $i);
 		}
-		return array_pop(unpack($format, $encoded));
+		$php_53_workaround = unpack($format, $encoded);
+		return array_pop($php_53_workaround);
 	}
 
 	protected function checkForOverSize($excpected_max, $actual) {
