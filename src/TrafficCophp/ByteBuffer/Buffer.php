@@ -44,8 +44,7 @@ class Buffer extends AbstractBuffer {
 		}
 	}
 
-	protected function extract($format, $offset) {
-		$length = $this->lengthMap->getLengthFor($format);
+	protected function extract($format, $offset, $length) {
 		$encoded = '';
 		for ($i = 0; $i < $length; $i++) {
 			$encoded .= $this->structs->offsetGet($offset + $i);
@@ -114,31 +113,33 @@ class Buffer extends AbstractBuffer {
 		$this->insert($format, $value, $offset, $this->lengthMap->getLengthFor($format));
 	}
 
-	public function read($start, $end) {}
+	public function read($start, $end) {
+
+	}
 
 	public function readInt8($offset) {
 		$format = 'C';
-		return $this->extract($format, $offset);;
+		return $this->extract($format, $offset, $this->lengthMap->getLengthFor($format));
 	}
 
 	public function readInt16BE($offset) {
 		$format = 'n';
-		return $this->extract($format, $offset);
+		return $this->extract($format, $offset, $this->lengthMap->getLengthFor($format));
 	}
 
 	public function readInt16LE($offset) {
 		$format = 'v';
-		return $this->extract($format, $offset);
+		return $this->extract($format, $offset, $this->lengthMap->getLengthFor($format));
 	}
 
 	public function readInt32BE($offset) {
 		$format = 'N';
-		return $this->extract($format, $offset);
+		return $this->extract($format, $offset, $this->lengthMap->getLengthFor($format));
 	}
 
 	public function readInt32LE($offset) {
 		$format = 'V';
-		return $this->extract($format, $offset);
+		return $this->extract($format, $offset, $this->lengthMap->getLengthFor($format));
 	}
 
 }
