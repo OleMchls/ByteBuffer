@@ -50,9 +50,13 @@ class Buffer extends AbstractBuffer {
 			$encoded .= $this->structs->offsetGet($offset + $i);
 		}
 		if (($format == 'N' || $format == 'V') && PHP_INT_SIZE <= 4) {
-			list(, $h, $l) = unpack('n*', $encoded);
-			$correctingValue = ($format == 'N') ? 0x010000 : 0x000010;
-			$result = ($l + ($h * $correctingValue));
+			list(, $h, $l) = unpack('n', $encoded);
+			//$correctingValue = ($format == 'N') ? 0x010000 : 0x000010;
+			//$result = ($l + ($h * $correctingValue));
+			if ($h < 0) {
+				$h += 4294967296;
+			}
+			$result = $h;
 		} else {
 			list(, $result) = unpack($format, $encoded);
 		}
