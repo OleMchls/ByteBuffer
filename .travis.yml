@@ -5,3 +5,5 @@ php:
 before_script:
   - wget http://getcomposer.org/composer.phar
   - php composer.phar install
+  - php -i | grep System
+  - php -i | grep Host
