@@ -51,7 +51,8 @@ class Buffer extends AbstractBuffer {
 		}
 		if (($format == 'N' || $format == 'V') && PHP_INT_SIZE <= 4) {
 			list(, $h, $l) = unpack(strtolower($format).'*', $encoded);
-			$result = ($l + ($h * 0x010000));
+			$correctingValue = ($format == 'N') ? 0x010000 : 0x000010;
+			$result = ($l + ($h * $correctingValue));
 		} else {
 			list(, $result) = unpack($format, $encoded);
 		}
