@@ -1,4 +1,4 @@
-# PHP Library for (reading) and writing binary data
+# PHP Library for reading and writing binary data
 
 [![Build Status](https://secure.travis-ci.org/nesQuick/ByteBuffer.png?branch=master)](http://travis-ci.org/nesQuick/ByteBuffer)
 
@@ -47,8 +47,8 @@ socket_write($socket, (string) $buffer, $buffer->length());
 
 ## ToDo's
 
-* Implement support for reading
 * Write Documentation
+* Improve examples
 
 ## License
 
