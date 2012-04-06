@@ -123,4 +123,24 @@ class BufferTest extends PHPUnit_Framework_TestCase {
 		$this->assertSame('message', $buffer->read(4, 7));
 	}
 
+	public function testWritingAndReadingOnTheSameBuffer() {
+		$buffer = new Buffer(10);
+		$int32be = 0xfeedface;
+		$string = 'hello!';
+		$buffer->writeInt32BE($int32be, 0);
+		$buffer->write($string, 4);
+		$this->assertSame($string, $buffer->read(4, 6));
+		$this->assertSame($int32be, $buffer->readInt32BE(0));
+	}
+
+	public function testInvalidConstructorWithArray() {
+		$this->setExpectedException('\InvalidArgumentException');
+		$buffer = new Buffer(array('asdf'));
+	}
+
+	public function testInvalidConstructorWithFloat() {
+		$this->setExpectedException('\InvalidArgumentException');
+		$buffer = new Buffer(324.23);
+	}
+
 }

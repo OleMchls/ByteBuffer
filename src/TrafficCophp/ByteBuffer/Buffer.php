@@ -8,13 +8,11 @@ namespace TrafficCophp\ByteBuffer;
 class Buffer extends AbstractBuffer {
 
 	const DEFAULT_FORMAT = 'x';
-	const RESERVED = '__RESERVED__';
-	const BLANK = '__BLANK__';
 
 	/**
 	 * @var \SplFixedArray
 	 */
-	protected $structs;
+	protected $buffer;
 
 	/**
 	 * @var LengthMap
@@ -25,29 +23,31 @@ class Buffer extends AbstractBuffer {
 		$this->lengthMap = new LengthMap();
 		if (is_string($argument)) {
 			$this->initializeStructs(strlen($argument), $argument);
+		} else if (is_int($argument)) {
+			$this->initializeStructs($argument, pack(self::DEFAULT_FORMAT.$argument));
 		} else {
-			$this->initializeStructs($argument, array_fill(0, $argument, self::BLANK));
+			throw new \InvalidArgumentException('Constructor argument must be an binary string or integer');
 		}
 	}
 
 	protected function initializeStructs($length, $content) {
-		$this->structs = new \SplFixedArray($length);
+		$this->buffer = new \SplFixedArray($length);
 		for ($i = 0; $i < $length; $i++) {
-			$this->structs[$i] = $content[$i];
+			$this->buffer[$i] = $content[$i];
 		}
 	}
 
 	protected function insert($format, $value, $offset, $length) {
-		$this->structs[$offset] = new Struct($format, $value, $length);
-		for ($i = 1; $i < $length; $i++) {
-			$this->structs[$offset + $i] = self::RESERVED;
+		$bytes = pack($format, $value);
+		for ($i = 0; $i < strlen($bytes); $i++) {
+			$this->buffer[$offset++] = $bytes[$i];
 		}
 	}
 
 	protected function extract($format, $offset, $length) {
 		$encoded = '';
 		for ($i = 0; $i < $length; $i++) {
-			$encoded .= $this->structs->offsetGet($offset + $i);
+			$encoded .= $this->buffer->offsetGet($offset + $i);
 		}
 		if ($format == 'N'&& PHP_INT_SIZE <= 4) {
 			list(, $h, $l) = unpack('n*', $encoded);
@@ -69,21 +69,14 @@ class Buffer extends AbstractBuffer {
 
 	public function __toString() {
 		$buf = '';
-		for ($i = 0; $i < $this->structs->getSize(); $i++) {
-			if ($this->structs[$i] instanceof Struct) {
-				$struct = $this->structs[$i];
-				$buf .= pack($struct->getFormat(), $struct->getValue());
-			} else if ($this->structs[$i] === self::RESERVED) {
-				// do nothing atm
-			} else if ($this->structs[$i] === self::BLANK) {
-				$buf .= pack(self::DEFAULT_FORMAT);
-			}
+		foreach ($this->buffer as $bytes) {
+			$buf .= $bytes;
 		}
 		return $buf;
 	}
 
 	public function length() {
-		return $this->structs->getSize();
+		return $this->buffer->getSize();
 	}
 
 	public function write($string, $offset) {
