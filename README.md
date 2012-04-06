@@ -49,6 +49,8 @@ socket_write($socket, (string) $buffer, $buffer->length());
 
 * Write Documentation
 * Improve examples
+* Allow Buffer as constructor
+* Write test for concatinating buffers
 
 ## License
 
