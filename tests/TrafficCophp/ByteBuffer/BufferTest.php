@@ -112,4 +112,15 @@ class BufferTest extends PHPUnit_Framework_TestCase {
 		$this->assertSame(0xfeedface, $buffer->readInt32LE(0));
 	}
 
+	public function testRead() {
+		$buffer = new Buffer(pack('a7', 'message'));
+		$this->assertSame('message', $buffer->read(0, 7));
+	}
+
+	public function testComplexRead() {
+		$buffer = new Buffer(pack('Na7', 0xfeedface, 'message'));
+		$this->assertSame(0xfeedface, $buffer->readInt32BE(0));
+		$this->assertSame('message', $buffer->read(4, 7));
+	}
+
 }

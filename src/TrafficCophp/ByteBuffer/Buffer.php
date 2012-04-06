@@ -121,8 +121,9 @@ class Buffer extends AbstractBuffer {
 		$this->insert($format, $value, $offset, $this->lengthMap->getLengthFor($format));
 	}
 
-	public function read($start, $end) {
-
+	public function read($offset, $length) {
+		$format = 'a' . $length;
+		return $this->extract($format, $offset, $length);
 	}
 
 	public function readInt8($offset) {
