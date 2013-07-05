@@ -4,7 +4,7 @@
 	xsi:noNamespaceSchemaLocation="http://gooh.github.com/phpunit-schema/3.7/phpunit.xsd"
 	backupGlobals="false"
 	backupStaticAttributes="false"
-	bootstrap="vendor/.composer/autoload.php"
+	bootstrap="vendor/autoload.php"
 	colors="true">
 
 	<testsuites>
