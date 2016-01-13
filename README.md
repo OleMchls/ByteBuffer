@@ -1,6 +1,6 @@
 # PHP Library for reading and writing binary data
 
-[![Build Status](https://secure.travis-ci.org/nesQuick/ByteBuffer.png?branch=master)](http://travis-ci.org/nesQuick/ByteBuffer)
+[![Build Status](https://secure.travis-ci.org/nesQuick/ByteBuffer.png?branch=master)](http://travis-ci.org/nesQuick/ByteBuffer)  [![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
 
 I intentionally needed that for writing a PHP Client for [TrafficCop](https://github.com/santosh79/traffic_cop/).
 But the source grows so I decided to move it into an own package.
