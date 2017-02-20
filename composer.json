@@ -13,7 +13,7 @@
 	],
 	"autoload": {
 		"psr-4": {
-			"TrafficCophp\\ByteBuffer": "src/TrafficCophp/ByteBuffer/"
+			"TrafficCophp\\ByteBuffer\\": "src/TrafficCophp/ByteBuffer/"
 		}
 	},
 	"require": {}
